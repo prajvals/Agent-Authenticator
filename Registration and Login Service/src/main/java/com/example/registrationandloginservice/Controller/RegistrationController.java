@@ -21,7 +21,7 @@ public class RegistrationController {
     @PostMapping("/CreateNewUser")
     public ResponseEntity<List<Users>> registerUser(@Valid @RequestBody Users users)
     {
-        System.out.println("entered");
+       
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(users));
     }
 

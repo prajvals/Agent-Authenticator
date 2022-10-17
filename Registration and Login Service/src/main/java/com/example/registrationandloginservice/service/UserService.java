@@ -10,4 +10,6 @@ public interface UserService {
     List<Users> registerUser(Users users);
 
     List<Users> getAllUser();
+
+    void saveVerificationToken(String token, Users users);
 }

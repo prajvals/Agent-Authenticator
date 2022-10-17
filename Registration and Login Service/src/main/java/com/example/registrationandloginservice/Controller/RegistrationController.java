@@ -18,13 +18,13 @@ public class RegistrationController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
     @PostMapping("/CreateNewUser")
     public ResponseEntity<List<Users>> registerUser(@Valid @RequestBody Users users)
     {
         applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(users,"url"));
+
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(users));
     }
 

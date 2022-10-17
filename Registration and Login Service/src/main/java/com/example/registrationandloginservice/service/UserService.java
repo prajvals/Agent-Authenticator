@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface UserService {
     List<Users> registerUser(Users users);
+
+    List<Users> getAllUser();
 }

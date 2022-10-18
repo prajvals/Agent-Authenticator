@@ -42,9 +42,10 @@ public class UserServiceImpl implements UserService{
         verificationTokenRepository.save(verificationToken);
     }
     @Override
-    public void sendVerificationTokenInMail(String token) {
+    public void sendVerificationTokenInMail(String token, String url) {
 
-        emailSenderService.sendSimpleEmail("singhprajval91@gmail.com",token,"Token for password Verification");
+        String bodyMessage = "Hello, please verify the email to use the service, ${token} and ${url}";
+        emailSenderService.sendSimpleEmail("singhprajval91@gmail.com",bodyMessage,"Token for password Verification");
 
 
     }

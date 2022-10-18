@@ -13,5 +13,5 @@ public interface UserService {
 
     void saveVerificationToken(String token, Users users);
 
-    void sendVerificationTokenInMail(String token);
+    void sendVerificationTokenInMail(String token,String url);
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -21,11 +22,15 @@ public class RegistrationController {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
     @PostMapping("/CreateNewUser")
-    public ResponseEntity<List<Users>> registerUser(@Valid @RequestBody Users users)
+    public ResponseEntity<List<Users>> registerUser(@Valid @RequestBody Users users, final HttpServletRequest httpServletRequest)
     {
-        applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(users,"url"));
+        applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(users,applicationUrl(httpServletRequest)));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(users));
+    }
+
+    private String applicationUrl(HttpServletRequest httpServletRequest) {
+        return "http://" + httpServletRequest.getServerName() + ":"  + httpServletRequest.getServerPort() + ":"+httpServletRequest.getContextPath();
     }
 
     @GetMapping("/users")

@@ -12,4 +12,6 @@ public interface UserService {
     List<Users> getAllUser();
 
     void saveVerificationToken(String token, Users users);
+
+    void sendVerificationTokenInMail(String token);
 }

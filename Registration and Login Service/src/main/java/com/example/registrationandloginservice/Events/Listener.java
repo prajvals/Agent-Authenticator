@@ -21,6 +21,7 @@ public class Listener implements ApplicationListener<RegistrationCompleteEvent> 
         Users users = event.getUser();
         String token = UUID.randomUUID().toString();
         userService.saveVerificationToken(token,users);
+        userService.sendVerificationTokenInMail(token);
 
     }
 }

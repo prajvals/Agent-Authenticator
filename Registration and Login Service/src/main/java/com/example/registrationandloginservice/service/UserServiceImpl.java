@@ -16,13 +16,13 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     @Autowired
+    EmailSenderService emailSenderService;
+    @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     VerificationTokenRepository verificationTokenRepository;
-
     @Override
     public List<Users> registerUser(Users users) {
         System.out.println("entered tye service");
@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService{
         userRepository.save(users);
         return userRepository.findAll();
     }
-
     @Override
     public List<Users> getAllUser() {
         return userRepository.findAll();
@@ -39,10 +38,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void saveVerificationToken(String token, Users users) {
-
         VerificationToken verificationToken = new VerificationToken(users,token);
         verificationTokenRepository.save(verificationToken);
-        
+    }
+    @Override
+    public void sendVerificationTokenInMail(String token) {
+
+        emailSenderService.sendSimpleEmail("singhprajval91@gmail.com",token,"Token for password Verification");
+
 
     }
 }

@@ -47,4 +47,15 @@ public class UserServiceImpl implements UserService{
         String bodyMessage = "Hello, please verify the email to use the service, {token} and ${url}";
         emailSenderService.sendSimpleEmail("singhprajval91@gmail.com",bodyMessage + "the token is " + token + "and the url used is " + url,"Token for password Verification");
     }
+
+    @Override
+    public Boolean verifyToken(String token) {
+
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
+        if(verificationToken == null)
+        {
+            return false;
+        }
+        return true;
+    }
 }

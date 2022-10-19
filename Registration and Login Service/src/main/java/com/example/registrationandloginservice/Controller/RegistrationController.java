@@ -30,7 +30,17 @@ public class RegistrationController {
     }
 
     private String applicationUrl(HttpServletRequest httpServletRequest) {
-        return "http://" + httpServletRequest.getServerName() + ":"  + httpServletRequest.getServerPort() +httpServletRequest.getContextPath();
+        return "http://" + httpServletRequest.getServerName() + ":"  + httpServletRequest.getServerPort() + httpServletRequest.getContextPath();
+    }
+
+    @GetMapping("/verifyRegistration")
+    private String VerifyToken(@RequestParam("token") String token)
+    {
+        if(userService.verifyToken(token))
+        {
+            return "User verified successfully";
+        }
+        return "User cannot be found, verification failed";
     }
 
     @GetMapping("/users")

@@ -14,9 +14,7 @@ public class VerificationToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private static final int EXPIRATION_TIME = 10;
-
     private String token;
 
     private Date expirationDate;

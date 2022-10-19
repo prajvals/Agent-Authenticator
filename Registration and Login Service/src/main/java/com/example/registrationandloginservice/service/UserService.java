@@ -16,4 +16,10 @@ public interface UserService {
     void sendVerificationTokenInMail(String token,String url);
 
     String verifyToken(String token);
+
+    String getVerificationToken(Users users);
+
+    Users getUserByFirstName(String firstName);
+
+    String generateURL(String applicationUrl, String token);
 }

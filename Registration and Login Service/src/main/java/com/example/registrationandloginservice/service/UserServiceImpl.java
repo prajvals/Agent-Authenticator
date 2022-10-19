@@ -68,4 +68,25 @@ public class UserServiceImpl implements UserService{
         users.setEnabled(true);
         return "Token Valid, User enabled";
     }
+
+    @Override
+    public String getVerificationToken(Users users) {
+
+        System.out.println("users = " + users.getId());
+        VerificationToken verificationToken = verificationTokenRepository.findByUsers(users);
+        System.out.println("verificationToken = " + verificationToken);
+        return verificationToken.getToken();
+    }
+
+    @Override
+    public Users getUserByFirstName(String firstName) {
+        return userRepository.findByFirstName(firstName);
+    }
+
+    @Override
+    public String generateURL(String applicationUrl, String token) {
+        String url = applicationUrl + "/verifyRegistration?token=" + token;
+        return url;
+
+    }
 }

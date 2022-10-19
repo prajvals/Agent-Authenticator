@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void sendVerificationTokenInMail(String token, String url) {
 
-        String bodyMessage = "Hello, please verify the email to use the service, ${token} and ${url}";
-        emailSenderService.sendSimpleEmail("singhprajval91@gmail.com",bodyMessage,"Token for password Verification");
+        String bodyMessage = "Hello, please verify the email to use the service, {token} and ${url}";
+        emailSenderService.sendSimpleEmail("singhprajval91@gmail.com",bodyMessage + "the token is " + token + "and the url used is " + url,"Token for password Verification");
     }
 }

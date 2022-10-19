@@ -30,7 +30,7 @@ public class RegistrationController {
     }
 
     private String applicationUrl(HttpServletRequest httpServletRequest) {
-        return "http://" + httpServletRequest.getServerName() + ":"  + httpServletRequest.getServerPort() + ":"+httpServletRequest.getContextPath();
+        return "http://" + httpServletRequest.getServerName() + ":"  + httpServletRequest.getServerPort() +httpServletRequest.getContextPath();
     }
 
     @GetMapping("/users")

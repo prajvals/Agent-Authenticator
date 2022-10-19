@@ -15,5 +15,5 @@ public interface UserService {
 
     void sendVerificationTokenInMail(String token,String url);
 
-    Boolean verifyToken(String token);
+    String verifyToken(String token);
 }

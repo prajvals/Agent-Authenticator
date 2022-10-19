@@ -50,12 +50,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Boolean verifyToken(String token) {
+    public String verifyToken(String token) {
 
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         if(verificationToken == null)
         {
-            return false;
+            return "User doesnt exsist, Token Cannot be verified";
         }
         Users users = verificationToken.getUsers();
         Calendar calender = Calendar.getInstance();
@@ -63,9 +63,9 @@ public class UserServiceImpl implements UserService{
         {
             verificationTokenRepository.delete(verificationToken);
             userRepository.delete(users);
-            return false;
+            return "Token expired, User deleted";
         }
         users.setEnabled(true);
-        return true;
+        return "Token Valid, User enabled";
     }
 }

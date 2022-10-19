@@ -36,11 +36,13 @@ public class RegistrationController {
     @GetMapping("/verifyRegistration")
     private String VerifyToken(@RequestParam("token") String token)
     {
-        if(userService.verifyToken(token))
-        {
-            return "User verified successfully";
-        }
-        return "User cannot be found, verification failed";
+//        if(userService.verifyToken(token))
+//        {
+//            return "User verified successfully";
+//        }
+//        return "User cannot be found, verification failed";
+
+        return userService.verifyToken(token);
     }
 
     @GetMapping("/users")

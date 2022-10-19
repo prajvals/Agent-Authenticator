@@ -1,6 +1,7 @@
 package com.example.registrationandloginservice.service;
 
 import com.example.registrationandloginservice.Entity.Users;
+import com.example.registrationandloginservice.Enums.VerificationEnums;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface UserService {
 
     Users getUserByFirstName(String firstName);
 
-    String generateURL(String applicationUrl, String token);
+    String generateURL(String applicationUrl, String token, VerificationEnums action);
 }

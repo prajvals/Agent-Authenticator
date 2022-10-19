@@ -2,6 +2,7 @@ package com.example.registrationandloginservice.service;
 
 import com.example.registrationandloginservice.Entity.Users;
 import com.example.registrationandloginservice.Entity.VerificationToken;
+import com.example.registrationandloginservice.Enums.VerificationEnums;
 import com.example.registrationandloginservice.Repository.UserRepository;
 import com.example.registrationandloginservice.Repository.VerificationTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +72,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public String getVerificationToken(Users users) {
-
-        System.out.println("users = " + users.getId());
         VerificationToken verificationToken = verificationTokenRepository.findByUsers(users);
-        System.out.println("verificationToken = " + verificationToken);
         return verificationToken.getToken();
     }
 
@@ -84,8 +82,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String generateURL(String applicationUrl, String token) {
-        String url = applicationUrl + "/verifyRegistration?token=" + token;
+    public String generateURL(String applicationUrl, String token, VerificationEnums action) {
+        String url = applicationUrl +"/" + action.getAction() + "?token=" + token;
         return url;
 
     }

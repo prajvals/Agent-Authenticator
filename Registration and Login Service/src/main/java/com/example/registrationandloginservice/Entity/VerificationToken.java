@@ -21,7 +21,7 @@ public class VerificationToken {
 
     private Date expirationDate;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id",
             referencedColumnName = "id",//possible error at this place
     nullable = false )

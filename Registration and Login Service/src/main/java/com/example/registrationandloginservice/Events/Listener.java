@@ -5,9 +5,11 @@ import com.example.registrationandloginservice.Entity.VerificationToken;
 import com.example.registrationandloginservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+@Component
 public class Listener implements ApplicationListener<RegistrationCompleteEvent> {
 
     @Autowired

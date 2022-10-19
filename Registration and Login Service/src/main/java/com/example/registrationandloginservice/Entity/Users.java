@@ -21,7 +21,7 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private long id;
     @NotEmpty(message = "First Name cannot be empty")
     @NotBlank(message = "First Name cannot be Null")

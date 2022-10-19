@@ -22,9 +22,9 @@ public class VerificationToken {
     private Date expirationDate;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", //possible error at this place
-    nullable = false,
-    foreignKey = @ForeignKey(name = "FK_USER_VERIFY_TOKEN"))
+    @JoinColumn(name = "user_id",
+            referencedColumnName = "id",//possible error at this place
+    nullable = false )
     private Users users;
 
     public VerificationToken(Users users, String token) {

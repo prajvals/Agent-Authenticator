@@ -48,6 +48,13 @@ public class RegistrationController {
 
     }
 
+    @GetMapping("/forgotPassword")
+    public String VerifyForgetPassword(@RequestParam("token") String token)
+    {
+        userService.verifyTokenForForgetPassword(token);
+        return "Accepted";
+    }
+
     @GetMapping("/verifyRegistration")
     public String VerifyToken(@RequestParam("token") String token) {
 //        if(userService.verifyToken(token))

@@ -23,4 +23,6 @@ public interface UserService {
     Users getUserByFirstName(String firstName);
 
     String generateURL(String applicationUrl, String token, VerificationEnums action);
+
+    void verifyTokenForForgetPassword(String token);
 }

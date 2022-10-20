@@ -87,4 +87,9 @@ public class UserServiceImpl implements UserService{
         return url;
 
     }
+
+    @Override
+    public void verifyTokenForForgetPassword(String token) {
+
+    }
 }

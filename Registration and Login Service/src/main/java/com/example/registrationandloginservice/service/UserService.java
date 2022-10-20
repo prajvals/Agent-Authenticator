@@ -20,7 +20,7 @@ public interface UserService {
 
     String getVerificationToken(Users users);
 
-    Users getUserByFirstName(String firstName);
+    Users getUserByUserName(String userName);
 
     String generateURL(String applicationUrl, String token, VerificationEnums action);
 

@@ -23,6 +23,10 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
+    @NotEmpty(message = "userName cannot be empty")
+    @NotBlank(message = "userName cannot be Null")
+    private String userName;
     @NotEmpty(message = "First Name cannot be empty")
     @NotBlank(message = "First Name cannot be Null")
     @Column(unique = true)

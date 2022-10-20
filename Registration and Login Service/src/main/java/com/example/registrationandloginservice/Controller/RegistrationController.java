@@ -42,18 +42,18 @@ public class RegistrationController {
     }
 
     @GetMapping("/resendToken")
-    public String ResendVerificationToken(@RequestParam("firstName") String firstName, final HttpServletRequest httpServletRequest) {
-        Users user = userService.getUserByFirstName(firstName);
+    public String ResendVerificationToken(@RequestParam("userName") String userName, final HttpServletRequest httpServletRequest) {
+        Users user = userService.getUserByUserName(userName);
         userService.configureAndSendMail(userService.getVerificationToken(user), userService.generateURL(applicationUrl(httpServletRequest), userService.getVerificationToken(user), VerificationEnums.VerifyRegistration));
         return "Token Sent";
     }
 
     @GetMapping("/forgotPasswordInitiation")
-    public String ResetPassword(@RequestParam("firstName") String firstName, @RequestParam("newPassword") String newPassword, final HttpServletRequest httpServletRequest)
+    public String ResetPassword(@RequestParam("userName") String userName, @RequestParam("newPassword") String newPassword, final HttpServletRequest httpServletRequest)
     {
         String token = UUID.randomUUID().toString();
-        userService.saveVerificationToken(token,userService.getUserByFirstName(firstName));
-        emailSenderService.sendSimpleEmail(userService.getUserByFirstName(firstName).getEmail(), "The forget password token is " + token + userService.generateURL(applicationUrl(httpServletRequest),token, VerificationEnums.ForgetPassword) + "&newPassword="+ newPassword, "Forget password mail");
+        userService.saveVerificationToken(token,userService.getUserByUserName(userName));
+        emailSenderService.sendSimpleEmail(userService.getUserByUserName(userName).getEmail(), "The forget password token is " + token + userService.generateURL(applicationUrl(httpServletRequest),token, VerificationEnums.ForgetPassword) + "&newPassword="+ newPassword, "Forget password mail");
         return "mail sent";
 
     }

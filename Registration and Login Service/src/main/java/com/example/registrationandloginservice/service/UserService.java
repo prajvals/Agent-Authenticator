@@ -26,5 +26,5 @@ public interface UserService {
 
     Boolean verifyTokenForForgetPassword(String token);
 
-    void updatePassword(String newPassword);
+    String updatePassword(String newPassword, String token);
 }

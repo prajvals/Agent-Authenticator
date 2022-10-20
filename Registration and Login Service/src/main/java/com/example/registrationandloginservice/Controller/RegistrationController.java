@@ -58,11 +58,14 @@ public class RegistrationController {
 
     }
     @GetMapping("/forgotPassword")
-    public void VerifyForgetPassword(@RequestParam("token") String token,@RequestParam("newPassword") String newPassword)
+    public String VerifyForgetPassword(@RequestParam("token") String token,@RequestParam("newPassword") String newPassword)
     {
          if(userService.verifyTokenForForgetPassword(token))
          {
-             userService.updatePassword(newPassword);
+             return userService.updatePassword(newPassword,token);
+         }
+         else{
+             return "Verification token invalid";
          }
     }
 

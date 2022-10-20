@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService{
     public List<Users> registerUser(Users users) {
         System.out.println("entered tye service");
         users.setPassword(passwordEncoder.encode(users.getPassword()));
+        users.setConfirmPassword(passwordEncoder.encode(users.getConfirmPassword()));
         System.out.println("users = " + users);
         userRepository.save(users);
         return userRepository.findAll();
@@ -99,7 +100,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updatePassword(String newPassword) {
+    public String updatePassword(String newPassword, String token) {
+        Users users = verificationTokenRepository.findByToken(token).getUsers();
+        users.setPassword(passwordEncoder.encode(newPassword));
+        users.setConfirmPassword(passwordEncoder.encode(newPassword));
+        return "Password changed Successfully";
 
     }
 }

@@ -4,6 +4,6 @@ Hello Happy to have you here !!!
 
 This repo presently contains only the registration and login service
 
-Tech stack used : Spring Boot, Spring Secuirty
+Tech stack used : Spring Boot, Spring Secuirty, Java mail sender
 
 Here I am building E-Commerce Platform for the fun of it LOL !!! and Learning So Much of Spring Boot

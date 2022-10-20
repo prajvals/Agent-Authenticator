@@ -53,8 +53,8 @@ public class RegistrationController {
     {
         String token = UUID.randomUUID().toString();
         userService.saveVerificationToken(token,userService.getUserByUserName(userName));
-        emailSenderService.sendSimpleEmail(userService.getUserByUserName(userName).getEmail(), "The forget password token is " + token + userService.generateURL(applicationUrl(httpServletRequest),token, VerificationEnums.ForgetPassword) + "&newPassword="+ newPassword, "Forget password mail");
-        return "mail sent";
+        emailSenderService.sendSimpleEmail(userService.getUserByUserName(userName).getEmail(), "The forget password token is " + token + " " + userService.generateURL(applicationUrl(httpServletRequest),token, VerificationEnums.ForgetPassword) + "&newPassword="+ newPassword, "Forget password mail");
+        return "Forget Password verification Mail sent";
 
     }
     @GetMapping("/forgotPassword")

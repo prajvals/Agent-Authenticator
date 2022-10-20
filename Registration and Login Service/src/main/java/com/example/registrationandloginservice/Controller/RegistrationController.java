@@ -18,10 +18,8 @@ import java.util.UUID;
 
 @RestController
 public class RegistrationController {
-
     @Autowired
     EmailSenderService emailSenderService;
-
     @Autowired
     private UserService userService;
     @Autowired
@@ -30,51 +28,52 @@ public class RegistrationController {
     @PostMapping("/CreateNewUser")
     public ResponseEntity<List<Users>> registerUser(@Valid @RequestBody Users users, final HttpServletRequest httpServletRequest) {
         applicationEventPublisher.publishEvent(new RegistrationCompleteEvent(users, applicationUrl(httpServletRequest)));
-
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(users));
     }
-
-    private String applicationUrl(HttpServletRequest httpServletRequest) {
-        return "http://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort() + httpServletRequest.getContextPath();
-    }
-
-    @GetMapping("/resetPassword")
-    public String ResetPassword(@RequestParam("firstName") String firstName, final HttpServletRequest httpServletRequest)
-    {
-        String token = UUID.randomUUID().toString();
-        userService.saveVerificationToken(token,userService.getUserByFirstName(firstName));
-        emailSenderService.sendSimpleEmail(userService.getUserByFirstName(firstName).getEmail(), "The forget password token is " + token + userService.generateURL(applicationUrl(httpServletRequest),token,VerificationEnums.ForgetPassword), "Forget password mail");
-        return "mail sent";
-
-    }
-
-    @GetMapping("/forgotPassword")
-    public String VerifyForgetPassword(@RequestParam("token") String token)
-    {
-        return userService.verifyTokenForForgetPassword(token);
-    }
-
     @GetMapping("/verifyRegistration")
-    public String VerifyToken(@RequestParam("token") String token) {
+    public String VerifyRegistrationToken(@RequestParam("token") String token) {
 //        if(userService.verifyToken(token))
 //        {
 //            return "User verified successfully";
 //        }
 //        return "User cannot be found, verification failed";
 
-        return userService.verifyToken(token);
+        return userService.verifyTokenForRegistration(token);
     }
 
     @GetMapping("/resendToken")
     public String ResendVerificationToken(@RequestParam("firstName") String firstName, final HttpServletRequest httpServletRequest) {
         Users user = userService.getUserByFirstName(firstName);
-        userService.sendVerificationTokenInMail(userService.getVerificationToken(user), userService.generateURL(applicationUrl(httpServletRequest), userService.getVerificationToken(user), VerificationEnums.VerifyRegistration));
+        userService.configureAndSendMail(userService.getVerificationToken(user), userService.generateURL(applicationUrl(httpServletRequest), userService.getVerificationToken(user), VerificationEnums.VerifyRegistration));
         return "Token Sent";
+    }
+
+    @GetMapping("/forgotPasswordInitiation")
+    public String ResetPassword(@RequestParam("firstName") String firstName, @RequestParam("newPassword") String newPassword, final HttpServletRequest httpServletRequest)
+    {
+        String token = UUID.randomUUID().toString();
+        userService.saveVerificationToken(token,userService.getUserByFirstName(firstName));
+        emailSenderService.sendSimpleEmail(userService.getUserByFirstName(firstName).getEmail(), "The forget password token is " + token + userService.generateURL(applicationUrl(httpServletRequest),token, VerificationEnums.ForgetPassword) + "&newPassword="+ newPassword, "Forget password mail");
+        return "mail sent";
+
+    }
+    @GetMapping("/forgotPassword")
+    public void VerifyForgetPassword(@RequestParam("token") String token,@RequestParam("newPassword") String newPassword)
+    {
+         if(userService.verifyTokenForForgetPassword(token))
+         {
+             userService.updatePassword(newPassword);
+         }
     }
 
     @GetMapping("/users")
     public ResponseEntity<List<Users>> getAllUsers() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUser());
+    }
+
+
+    private String applicationUrl(HttpServletRequest httpServletRequest) {
+        return "http://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort() + httpServletRequest.getContextPath();
     }
 
 }

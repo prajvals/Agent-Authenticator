@@ -44,14 +44,14 @@ public class UserServiceImpl implements UserService{
         verificationTokenRepository.save(verificationToken);
     }
     @Override
-    public void sendVerificationTokenInMail(String token, String url) {
+    public void configureAndSendMail(String token, String url) {
 
-        String bodyMessage = "Hello, please verify the email to use the service, {token} and ${url}";
+        String bodyMessage = "Hello, please verify the email to use the service";
         emailSenderService.sendSimpleEmail("singhprajval91@gmail.com",bodyMessage + "the token is " + token + "and the url used is " + url,"Token for password Verification");
     }
 
     @Override
-    public String verifyToken(String token) {
+    public String verifyTokenForRegistration(String token) {
 
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         if(verificationToken == null)
@@ -89,12 +89,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String verifyTokenForForgetPassword(String token) {
+    public Boolean verifyTokenForForgetPassword(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         if (verificationToken == null) {
-            return "Token is invalid";
+            return false;
         }
-        return "Password changed successfully";
+        return true;
+
+    }
+
+    @Override
+    public void updatePassword(String newPassword) {
 
     }
 }

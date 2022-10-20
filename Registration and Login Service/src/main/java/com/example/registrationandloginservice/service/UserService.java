@@ -14,9 +14,9 @@ public interface UserService {
 
     void saveVerificationToken(String token, Users users);
 
-    void sendVerificationTokenInMail(String token,String url);
+    void configureAndSendMail(String token, String url);
 
-    String verifyToken(String token);
+    String verifyTokenForRegistration(String token);
 
     String getVerificationToken(Users users);
 
@@ -24,5 +24,7 @@ public interface UserService {
 
     String generateURL(String applicationUrl, String token, VerificationEnums action);
 
-    String verifyTokenForForgetPassword(String token);
+    Boolean verifyTokenForForgetPassword(String token);
+
+    void updatePassword(String newPassword);
 }

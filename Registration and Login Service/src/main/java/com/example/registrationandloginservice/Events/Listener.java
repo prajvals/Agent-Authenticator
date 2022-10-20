@@ -1,7 +1,6 @@
 package com.example.registrationandloginservice.Events;
 
 import com.example.registrationandloginservice.Entity.Users;
-import com.example.registrationandloginservice.Entity.VerificationToken;
 import com.example.registrationandloginservice.Enums.VerificationEnums;
 import com.example.registrationandloginservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class Listener implements ApplicationListener<RegistrationCompleteEvent> 
         String token = UUID.randomUUID().toString();
         userService.saveVerificationToken(token,users);
 //        String url = event.getApplicationUrl() + "/verifyRegistration?token=" + token;
-        userService.sendVerificationTokenInMail(token,userService.generateURL(event.getApplicationUrl(), token, VerificationEnums.VerifyRegistration));
+        userService.configureAndSendMail(token,userService.generateURL(event.getApplicationUrl(), token, VerificationEnums.VerifyRegistration));
 
     }
 }

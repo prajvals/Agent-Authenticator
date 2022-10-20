@@ -1,5 +1,6 @@
 package com.example.registrationandloginservice.Controller;
 
+import com.example.registrationandloginservice.DTO.PasswordChangeDTO;
 import com.example.registrationandloginservice.Entity.Users;
 import com.example.registrationandloginservice.Enums.VerificationEnums;
 import com.example.registrationandloginservice.Events.RegistrationCompleteEvent;
@@ -48,16 +49,17 @@ public class RegistrationController {
         return "Token Sent";
     }
 
-    @GetMapping("/forgotPasswordInitiation")
-    public String ResetPassword(@RequestParam("userName") String userName, @RequestParam("newPassword") String newPassword, final HttpServletRequest httpServletRequest)
+    @PostMapping("/forgotPasswordInitiation")
+    public String ResetPassword(@RequestParam("userName") String userName, @RequestBody PasswordChangeDTO passwordChangeDTO, final HttpServletRequest httpServletRequest)
     {
         String token = UUID.randomUUID().toString();
         userService.saveVerificationToken(token,userService.getUserByUserName(userName));
-        emailSenderService.sendSimpleEmail(userService.getUserByUserName(userName).getEmail(), "The forget password token is " + token + " " + userService.generateURL(applicationUrl(httpServletRequest),token, VerificationEnums.ForgetPassword) + "&newPassword="+ newPassword, "Forget password mail");
+        emailSenderService.sendSimpleEmail(userService.getUserByUserName(userName).getEmail(), "The forget password token is " + token + " " + userService.generateURL(applicationUrl(httpServletRequest),token, VerificationEnums.ForgetPassword) + "&newPassword="+ passwordChangeDTO.getNewPassword(), "Forget password mail");
         return "Forget Password verification Mail sent";
 
     }
-    @GetMapping("/forgotPassword")
+    @GetMapping("/forgotPassword") //this i will have to make a post call and pass the details in the request object only
+    //second for the verification token, the user verification needs to be made
     public String VerifyForgetPassword(@RequestParam("token") String token,@RequestParam("newPassword") String newPassword)
     {
          if(userService.verifyTokenForForgetPassword(token))
@@ -80,3 +82,9 @@ public class RegistrationController {
     }
 
 }
+/*
+1. design imporvement for now is that I have used the same table for both the verificastion of the user and for the verifiaction of the
+passwords alright yeah
+2. So I might need to cast it outside actually alright yeah
+
+ */

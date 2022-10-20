@@ -89,7 +89,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void verifyTokenForForgetPassword(String token) {
+    public String verifyTokenForForgetPassword(String token) {
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
+        if (verificationToken == null) {
+            return "Token is invalid";
+        }
+        return "Password changed successfully";
 
     }
 }

@@ -24,5 +24,5 @@ public interface UserService {
 
     String generateURL(String applicationUrl, String token, VerificationEnums action);
 
-    void verifyTokenForForgetPassword(String token);
+    String verifyTokenForForgetPassword(String token);
 }

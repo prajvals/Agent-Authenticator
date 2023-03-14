@@ -12,4 +12,4 @@ Login using Oauth and openId connect in the process.
 
 Plan to implement JWT TOKENS too.
 
-Here I am building E-Commerce Platform for the fun of it LOL !!! and Learning So Much of Spring Boot
+Here I am building E-Commerce Platform for the fun of it LOL !!! and Learning So Much of Spring Boot.
